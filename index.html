@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloe Huang — Standup Comedy</title>
+    <meta name="description" content="Cloe Huang's standup comedy — shows, videos, and more.">
+    <meta property="og:title" content="Cloe Huang — Standup Comedy">
+    <meta property="og:description" content="Cloe Huang's standup comedy — shows, videos, and more.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://creativeworks-sketch.github.io/cloe.standup/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #FAFAFA;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* ── Tab system (CSS radio hack) ── */
+        input[name="tab"] {
+            display: none;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        #tab-home:checked ~ .content-wrap .tab-home,
+        #tab-comedy:checked ~ .content-wrap .tab-comedy {
+            display: block;
+        }
+
+        /* ── Header ── */
+        header {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* ── Nav ── */
+        nav {
+            background: #fff;
+            border-bottom: 3px solid #FFE66D;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            display: flex;
+            justify-content: center;
+            gap: 0;
+        }
+
+        nav label,
+        nav a {
+            display: inline-block;
+            padding: 0.9rem 1.5rem;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1rem;
+            color: #555;
+            cursor: pointer;
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+            position: relative;
+            top: 3px;
+        }
+
+        nav label:hover,
+        nav a:hover {
+            color: #FF6B6B;
+        }
+
+        #tab-home:checked ~ .content-wrap nav label[for="tab-home"],
+        #tab-comedy:checked ~ .content-wrap nav label[for="tab-comedy"] {
+            color: #FF6B6B;
+            border-bottom-color: #FF6B6B;
+        }
+
+        nav a::after {
+            content: ' ↗';
+            font-size: 0.75rem;
+        }
+
+        /* ── Mobile hamburger ── */
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 1.1rem;
+            right: 1.2rem;
+            z-index: 200;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 0.65rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2.5px;
+            background: #FF6B6B;
+            margin: 4px 0;
+            border-radius: 2px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(4px, 5px);
+        }
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(4px, -5px);
+        }
+
+        @media (max-width: 640px) {
+            .hamburger {
+                display: block;
+            }
+
+            nav {
+                flex-direction: column;
+                align-items: stretch;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.35s ease;
+                border-bottom: none;
+            }
+
+            nav.open {
+                max-height: 300px;
+                border-bottom: 3px solid #FFE66D;
+            }
+
+            nav label,
+            nav a {
+                text-align: center;
+                padding: 0.8rem 1rem;
+                border-bottom: 1px solid #f0f0f0;
+                top: 0;
+            }
+        }
+
+        /* ── Home tab ── */
+        .hero {
+            text-align: center;
+            padding: 2.5rem 0 1.5rem;
+        }
+
+        .hero-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #FFE66D;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2rem;
+            color: #FF6B6B;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 520px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.4rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-youtube {
+            background: #FF6B6B;
+            color: #fff;
+        }
+
+        .btn-instagram {
+            background: #4ECDC4;
+            color: #fff;
+        }
+
+        /* ── Comedy tab — show cards ── */
+        .comedy-intro {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .comedy-intro h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: #4ECDC4;
+            margin-bottom: 0.4rem;
+        }
+
+        .comedy-intro p {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .show-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+            border-left: 5px solid #FF6B6B;
+            transition: box-shadow 0.2s;
+        }
+
+        .show-card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .show-card:nth-child(even) {
+            border-left-color: #4ECDC4;
+        }
+
+        .show-card:nth-child(3n) {
+            border-left-color: #FFE66D;
+        }
+
+        .show-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-size: 2rem;
+        }
+
+        .show-info h3 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.15rem;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .show-meta {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 0.4rem;
+        }
+
+        .show-info p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .show-number {
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.75rem;
+            color: #fff;
+            background: #FF6B6B;
+            border-radius: 50px;
+            padding: 0.15rem 0.6rem;
+            display: inline-block;
+            margin-bottom: 0.3rem;
+        }
+
+        .show-card:nth-child(even) .show-number {
+            background: #4ECDC4;
+        }
+
+        .show-card:nth-child(3n) .show-number {
+            background: #e6c84a;
+        }
+
+        @media (max-width: 640px) {
+            .show-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .show-photo {
+                width: 100%;
+                height: 140px;
+            }
+
+            header h1 {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: #bbb;
+            font-size: 0.85rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Tab radio inputs (siblings before everything) -->
+<input type="radio" name="tab" id="tab-home" checked>
+<input type="radio" name="tab" id="tab-comedy">
+
+<div class="content-wrap">
+
+    <!-- Hamburger button (mobile) -->
+    <button class="hamburger" aria-label="Menu" onclick="this.classList.toggle('open'); document.querySelector('nav').classList.toggle('open');">
+        <span></span><span></span><span></span>
+    </button>
+
+    <header>
+        <h1>Cloe Huang</h1>
+        <p>Standup Comedy</p>
+    </header>
+
+    <nav>
+        <label for="tab-home">Home</label>
+        <label for="tab-comedy">Comedy</label>
+        <a href="https://creativeworks-sketch.github.io/support.me/" target="_blank" rel="noopener">Donate</a>
+        <a href="https://creativeworks-sketch.github.io/blueprint-for-heaven/" target="_blank" rel="noopener">Blueprint for Heaven</a>
+    </nav>
+
+    <!-- HOME -->
+    <div class="tab-content tab-home">
+        <div class="hero">
+            <img src="profile.png" alt="Cloe Huang" class="hero-photo">
+            <h2>Hey, I'm Cloe!</h2>
+            <p>I do standup comedy. I talk about life, culture, and things that probably shouldn't be funny but are.</p>
+            <div class="social-links">
+                <a href="https://www.youtube.com/@chloericeball" target="_blank" rel="noopener" class="btn-youtube">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.9 31.9 0 0 0 0 12a31.9 31.9 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.9 31.9 0 0 0 24 12a31.9 31.9 0 0 0-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+                    YouTube
+                </a>
+                <a href="https://www.instagram.com/chloericeball/" target="_blank" rel="noopener" class="btn-instagram">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4a3.9 3.9 0 0 1-1.4-.9 3.9 3.9 0 0 1-.9-1.4c-.2-.4-.4-1-.4-2.2-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.3-.1 1.6-.1 4.8-.1zM12 0C8.7 0 8.3 0 7.1.1 5.8.1 4.9.3 4.1.6c-.8.3-1.5.7-2.2 1.4A6 6 0 0 0 .6 4.1C.3 4.9.1 5.8.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.1 1.3.3 2.1.6 2.9.3.8.7 1.5 1.4 2.2.7.7 1.4 1.1 2.2 1.4.8.3 1.6.5 2.9.6 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c1.3-.1 2.1-.3 2.9-.6.8-.3 1.5-.7 2.2-1.4.7-.7 1.1-1.4 1.4-2.2.3-.8.5-1.6.6-2.9.1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.1-1.3-.3-2.1-.6-2.9a6 6 0 0 0-1.4-2.2A6 6 0 0 0 19.9.6C19.1.3 18.3.1 17 .1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/></svg>
+                    Upcoming Shows
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMEDY -->
+    <div class="tab-content tab-comedy">
+        <div class="comedy-intro">
+            <h2>Shows</h2>
+            <p>A running log of my standup sets — newest first.</p>
+        </div>
+
+        <div class="show-card">
+            <div class="show-photo">🎤</div>
+            <div class="show-info">
+                <span class="show-number">#10</span>
+                <h3>Show Name TBD</h3>
+                <div class="show-meta">Date TBD · Venue TBD</div>
+                <p>Description coming soon.</p>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-photo">🎤</div>
+            <div class="show-info">
+                <span class="show-number">#9</span>
+                <h3>Show Name TBD</h3>
+                <div class="show-meta">Date TBD · Venue TBD</div>
+                <p>Description coming soon.</p>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-photo">🎤</div>
+            <div class="show-info">
+                <span class="show-number">#8</span>
+                <h3>Show Name TBD</h3>
+                <div class="show-meta">Date TBD · Venue TBD</div>
+                <p>Description coming soon.</p>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-photo">🎤</div>
+            <div class="show-info">
+                <span class="show-number">#7</span>
+                <h3>Show Name TBD</h3>
+                <div class="show-meta">Date TBD · Venue TBD</div>
+                <p>Description coming soon.</p>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-photo">🎤</div>
+            <div class="show-info">
+                <span class="show-number">#6</span>
+                <h3>Show Name TBD</h3>
+                <div class="show-meta">Date TBD · Venue TBD</div>
+                <p>Description coming soon.</p>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-photo">🎤</div>
+            <div class="show-info">
+                <span class="show-number">#5</span>
+                <h3>Show Name TBD</h3>
+                <div class="show-meta">Date TBD · Venue TBD</div>
+                <p>Description coming soon.</p>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-photo">🎤</div>
+            <div class="show-info">
+                <span class="show-number">#4</span>
+                <h3>Show Name TBD</h3>
+                <div class="show-meta">Date TBD · Venue TBD</div>
+                <p>Description coming soon.</p>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-photo">🎤</div>
+            <div class="show-info">
+                <span class="show-number">#3</span>
+                <h3>Show Name TBD</h3>
+                <div class="show-meta">Date TBD · Venue TBD</div>
+                <p>Description coming soon.</p>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-photo">🎤</div>
+            <div class="show-info">
+                <span class="show-number">#2</span>
+                <h3>Show Name TBD</h3>
+                <div class="show-meta">Date TBD · Venue TBD</div>
+                <p>Description coming soon.</p>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-photo">🎤</div>
+            <div class="show-info">
+                <span class="show-number">#1</span>
+                <h3>Show Name TBD</h3>
+                <div class="show-meta">Date TBD · Venue TBD</div>
+                <p>Description coming soon.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Cloe Huang
+    </footer>
+
+</div><!-- /content-wrap -->
+
+<!-- Close mobile nav when a tab is selected -->
+<script>
+document.querySelectorAll('nav label').forEach(function(label) {
+    label.addEventListener('click', function() {
+        document.querySelector('.hamburger').classList.remove('open');
+        document.querySelector('nav').classList.remove('open');
+    });
+});
+</script>
+
+<!-- PostHog -->
+<script>
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+posthog.init('phc_6JozjW56JLH58XQxNrlSwibiXxwUCpG5RM1PTQyJnvC', {
+    api_host: 'https://us.i.posthog.com',
+    person_profiles: 'identified_only'
+});
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1R02FZ54S6"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1R02FZ54S6');
+</script>
+
+</body>
+</html>
