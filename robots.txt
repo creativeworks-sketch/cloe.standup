@@ -25,4 +25,4 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
-Sitemap: https://chloericeball.github.io/cloe.standup/sitemap.xml
+Sitemap: https://chloericeball.github.io/standup/sitemap.xml
